@@ -1,0 +1,23 @@
+body{
+    display: flex;
+    flex-direction: column;
+     color:black; 
+     background-image: url('l3.jpg');
+   background-repeat: no-repeat;
+background-attachment: fixed; 
+background-size: 100% 100%;
+ 
+/* background-image: linear-gradient(to right top, #85859d, #a089a4, #bd8da1, #d49496, #dea086, #d59e76, #c99c68, #ba9c5c, #a78646, #947131, #825d1c, #6f4904); */
+
+}
+      .shadow{
+  background-color: azure;
+  padding: 25px;
+  margin: auto;
+  height: auto;
+  width:70rem;
+  border-radius: 5%;
+  margin-top:10rem;
+  margin-bottom: 10rem;
+  
+}

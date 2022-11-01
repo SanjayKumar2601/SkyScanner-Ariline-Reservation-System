@@ -1,0 +1,22 @@
+
+ header {
+    min-height: 100px;
+    
+  }
+ 
+ 
+
+.container{
+  display: grid;
+  position: relative;
+  margin-top:15rem;
+  padding: 25px;
+  align-items: center;
+  justify-content: center;
+  
+   
+    
+}
+.container button{
+  margin-top: 15px;
+}
