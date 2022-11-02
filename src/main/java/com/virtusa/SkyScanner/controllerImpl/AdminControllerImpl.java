@@ -25,6 +25,7 @@ import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
  * Handles all the admin releated mappings
  * All implemented  */
 @RestController
+
 public class AdminControllerImpl{
 	
 	@Autowired
