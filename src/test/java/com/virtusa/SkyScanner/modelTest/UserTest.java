@@ -41,7 +41,7 @@ import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=AirlineReservationSystem.class)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class UserTest {
 
 	

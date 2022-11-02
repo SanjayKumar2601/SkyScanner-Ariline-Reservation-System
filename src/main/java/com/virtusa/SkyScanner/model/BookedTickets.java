@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
  * Stores the booked ticket details
  * */
 @Entity
-@NoArgsConstructor
 public class BookedTickets {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -135,7 +134,7 @@ public class BookedTickets {
 		this.seats = seats;
 	}
 
-	
+	public BookedTickets() {}
 
 	
 }

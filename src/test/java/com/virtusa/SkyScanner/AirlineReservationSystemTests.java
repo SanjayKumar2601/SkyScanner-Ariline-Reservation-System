@@ -41,70 +41,8 @@ import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class AirlineReservationSystemTests {
 
-	@MockBean
-	UsersRepository userRepo;
-	
-	@MockBean
-	FligthsRepository flightRepo;
-	
-	@MockBean
-	BookTicketsRepository ticketRepo;
-	
-	@MockBean
-	CheckinRepository checkinRepo;
-	
-	
-	@Autowired
-	LoginServicesImpl loginService;
-	
-	@Autowired
-	UserServiceImpl userServiceImpl;
-	
-	@Autowired
-	FlightServicesImpl flightService;
-	
-	@Autowired
-	FlightBookingServiceImpl flightbService;
-	
-	@Autowired
-	CheckinServiceImpl checkService;
-	
-	@Autowired
-	private MockMvc mockmvc;
-	
-	@Autowired
-	public WebApplicationContext context;
-	
-	ObjectMapper om=new ObjectMapper();
-	
-	
-	Users u=new Users(1,"mail","sa","sa");
-	Flights fl=new Flights(1,1,"chennai","mumbai","09:00","10:00",100.00,100);
-	BookFlights bf=new BookFlights(1,"round","chennai","mumbai","12-10-12",1,1);
-	BookedTickets bt=new BookedTickets(1,1,2,4,"A3",u);
-	BookedTickets tickets1=new BookedTickets(1,1,2,3,"B6",u);
-	CheckIn c=new CheckIn(1,"Airport Check In");
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
 	
 }

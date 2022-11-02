@@ -39,7 +39,7 @@ import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class TicketDetailsTest {
 
 	

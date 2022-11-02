@@ -94,7 +94,7 @@ public class FlightServiceTest {
 	@Test
 	void removeFlightByIdTest() {
 		flightService.removeFlightByFlightNumber(1);
-		verify(flightRepo,times(1)).deleteById(1);
+		verify(flightRepo,times(1)).deleteByFlightnumber(1);
 	}
 	@Test
 	void getAllFlightsTest() {

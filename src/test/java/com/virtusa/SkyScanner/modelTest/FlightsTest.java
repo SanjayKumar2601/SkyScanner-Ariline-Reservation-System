@@ -36,7 +36,7 @@ import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class FlightsTest {
 
 	
@@ -95,12 +95,14 @@ public class FlightsTest {
 		f.setflightnumber(1);
 		f.setPrice(100.00);
 		f.setstarttime("06:00");
+		f.setSeatcount(1000);
 		assertEquals("chn",f.getDeparture());
 		assertEquals("mumbai",f.getDestination());
 		assertEquals("10:00",f.getendtime());
 		assertEquals(1,f.getflightnumber());
 		assertEquals(100.00,f.getPrice(),0);
 		assertEquals("09:00",fl.getstarttime());
+		assertEquals(1000,f.getSeatcount());
 		}
 	
 	

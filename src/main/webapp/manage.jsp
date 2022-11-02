@@ -25,7 +25,7 @@
 <center><h2><c:out value='${login}'/></h2></center>
 <div class="shadow bg-white rounded"><!--bg-white-->
     <center><h3>Booked Tickets</h3></center>
-    <form action="/manage">
+    <form action="/manage" method="post">
   <table class="table table-bordered">
     <thead>
         <tr>

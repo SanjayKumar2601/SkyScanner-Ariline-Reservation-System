@@ -106,7 +106,7 @@ public class TicketManagmentControllerImpl {
 	
 	/**Display the payment page 
 	 */
-	@GetMapping("/displaypayment")
+	@PostMapping("/displaypayment")
 	public ModelAndView displayPayment() {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("payment.jsp");

@@ -172,7 +172,7 @@ public class UserControllerImpl{
 	
 	/** Displays all the booked tickets and its details
 	 */
-	@GetMapping("/manage")
+	@PostMapping("/manage")
 	public ModelAndView manage() {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("manage.jsp");

@@ -32,7 +32,7 @@ import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class ControllerTest {
 	
 	@MockBean
@@ -231,6 +231,8 @@ public class ControllerTest {
 	void LogoutTest() throws Exception{
 		mockmvc.perform(post("/logout")).andExpect(status().isOk()).andExpect(view().name("Home.jsp")).andReturn();
 	}
+	
+	
 	
 	
 }

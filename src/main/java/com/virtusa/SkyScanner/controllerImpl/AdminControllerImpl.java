@@ -84,7 +84,7 @@ public class AdminControllerImpl{
 	
 	/**Display the page for removing flights
 	 */
-	@GetMapping("/displayremoveFlights")
+	@PostMapping("/displayremoveFlights")
 	public ModelAndView adminRemoveFligths() {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("removeFlight.jsp");
