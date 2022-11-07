@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FlightBookingServiceImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">BookedTicketsTest (03-Nov-2022 1:43:21 pm)</a> &gt; <a href="../../index.html" class="el_group">skyscanner</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.serviceImpl</a> &gt; <span class="el_source">FlightBookingServiceImpl.java</span></div><h1>FlightBookingServiceImpl.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.serviceImpl;
+
+import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.virtusa.SkyScanner.model.BookFlights;
+import com.virtusa.SkyScanner.model.BookedTickets;
+import com.virtusa.SkyScanner.model.Flights;
+import com.virtusa.SkyScanner.model.Users;
+import com.virtusa.SkyScanner.repository.BookTicketsRepository;
+import com.virtusa.SkyScanner.repository.FligthsRepository;
+import com.virtusa.SkyScanner.repository.UsersRepository;
+import com.virtusa.SkyScanner.service.FlightBookingService;
+
+/** 
+ * This service implements FlightBookingService interface and handles all the processing for ticket booking related requests
+  */
+@Service
+<span class="fc" id="L20">public class FlightBookingServiceImpl implements FlightBookingService{</span>
+	
+	@Autowired
+	FligthsRepository flightsRepo;
+	
+	
+	@Autowired
+	BookTicketsRepository bookticketRepo;
+	
+	@Autowired
+	CheckinServiceImpl checinService;
+	
+
+	
+	@Autowired
+	UsersRepository userRepo;
+	
+
+	Flights f;
+<span class="fc" id="L39">	double price=0;</span>
+	
+	/** 
+	 * This is to search flights
+	  */
+	public List&lt;Flights&gt; searchFlights(BookFlights f) {
+
+<span class="fc" id="L46">		return  flightsRepo.search(f.getFrom(),f.getTo());</span>
+		
+	}
+	
+	
+	/** 
+	 * This is to book flights
+	  */
+	public String bookFlightss(BookedTickets ticket) {
+<span class="nc" id="L55">		f=flightsRepo.getFlight(ticket.getFlightnumber());</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if((checkTicketCount(ticket)).equals(&quot;Booking Success&quot;))</span>
+		{
+<span class="nc" id="L58">			updateTicketCount(ticket);</span>
+<span class="nc" id="L59">			bookticketRepo.save(ticket);</span>
+<span class="nc" id="L60">			ticket.setPaymentstatus(&quot;Paid&quot;);</span>
+<span class="nc" id="L61">			checinService.setSeats(ticket.getTid());</span>
+<span class="nc" id="L62">			return &quot;Booking Success&quot;;</span>
+		}
+		else
+<span class="nc" id="L65">			return &quot;Only &quot;+f.getSeatcount()+&quot; available&quot;;</span>
+	}
+	
+	/** 
+	 * This is check the ticket count of a particular flight
+	  */
+	public String checkTicketCount(BookedTickets ticket) {
+<span class="nc" id="L72">		f=flightsRepo.getFlight(ticket.getFlightnumber());</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if(f.getSeatcount()&lt;(ticket.getAdultcount())+(ticket.getChildrencount()))</span>
+<span class="nc" id="L74">			return &quot;Only &quot;+f.getSeatcount()+&quot; available&quot;;</span>
+		else 
+<span class="nc" id="L76">			return &quot;Booking Success&quot;;</span>
+	}
+	
+	/** 
+	 * This is get update the ticket count
+	  */
+	public void updateTicketCount(BookedTickets ticket) {
+<span class="nc" id="L83">		f=flightsRepo.getFlight(ticket.getFlightnumber());</span>
+<span class="nc" id="L84">		int count=(ticket.getAdultcount())+(ticket.getChildrencount());</span>
+<span class="nc" id="L85">		f.setSeatcount((f.getSeatcount())-count);</span>
+<span class="nc" id="L86">		flightsRepo.updateTicketCount(f.getflightnumber(),f.getSeatcount());</span>
+<span class="nc" id="L87">	}</span>
+
+	/** 
+	 * This is to calculate the cost of the ticket based on the passenger count
+	  */
+	public boolean calculateCost(BookedTickets ticket) {
+<span class="nc" id="L93">		price=0;</span>
+<span class="nc" id="L94">		f=flightsRepo.getFlight(ticket.getFlightnumber());</span>
+<span class="nc" id="L95">		double fprice=f.getPrice();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if(ticket.getAdultcount()!=0)</span>
+<span class="nc" id="L97">			price+=(ticket.getAdultcount())*(fprice);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if(ticket.getChildrencount()!=0)</span>
+<span class="nc" id="L99">			price+=(ticket.getChildrencount())*(fprice/2);</span>
+<span class="nc" id="L100">		ticket.setPrice(price);</span>
+<span class="nc" id="L101">		return true;</span>
+	}
+	
+	
+	/** 
+	 * This is get price
+	  */
+	public double getPrice() {
+<span class="fc" id="L109">		return price;</span>
+	}
+
+	/** 
+	 * This is cancel ticket by id
+	  */
+	public String cancelTicket(int n) {
+<span class="fc" id="L116">		bookticketRepo.deleteById(n);</span>
+<span class="fc" id="L117">		return &quot;Cancelled&quot;;</span>
+	}
+	
+	/** 
+	 * This is get details of ticket based on the user
+	  */
+	public List&lt;BookedTickets&gt; userTicketDisplay(int n) {
+<span class="fc" id="L124">		return bookticketRepo.findByU(userRepo.findById(n).orElse(null));</span>
+	}
+
+	/** 
+	 * This is get details of flight based on flight number
+	  */
+	public List&lt;BookedTickets&gt; manageTicket(Users uss) {
+<span class="fc" id="L131">		return bookticketRepo.findByU(uss);</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>BookedTicketsTest (03-Nov-2022 1:43:21 pm)</div></body></html>

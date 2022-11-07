@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.virtusa.SkyScanner.controller"},{"l":"com.virtusa.SkyScanner.controllerImpl"},{"l":"com.virtusa.SkyScanner.model"},{"l":"com.virtusa.SkyScanner.repository"},{"l":"com.virtusa.SkyScanner.serviceImpl"}];updateSearchResults();

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>BookFlights.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ControllerTest.PaymentTest (Nov 1, 2022 8:19:03 PM)</a> &gt; <a href="../../index.html" class="el_group">SkyScanner</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.model</a> &gt; <span class="el_source">BookFlights.java</span></div><h1>BookFlights.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.model;
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+/** This is a model class.
+ * Here id is set as the primary key and is a auto generated value 
+ * Store search details
+ * */
+
+@Entity
+public class BookFlights {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	int id;
+	
+	String trip;
+	@Column(name=&quot;departure&quot;)
+	String from;
+	@Column(name=&quot;destination&quot;)
+	String to;
+	String date;
+	int adultcount;
+	int childrencount;
+	public int getId() {
+<span class="fc" id="L32">		return id;</span>
+	}
+	public void setId(int id) {
+<span class="fc" id="L35">		this.id = id;</span>
+<span class="fc" id="L36">	}</span>
+	public String getTrip() {
+<span class="fc" id="L38">		return trip;</span>
+	}
+	public void setTrip(String trip) {
+<span class="fc" id="L41">		this.trip = trip;</span>
+<span class="fc" id="L42">	}</span>
+	public String getFrom() {
+<span class="fc" id="L44">		return from;</span>
+	}
+	public void setFrom(String from) {
+<span class="fc" id="L47">		this.from = from;</span>
+<span class="fc" id="L48">	}</span>
+	public String getTo() {
+<span class="fc" id="L50">		return to;</span>
+	}
+	public void setTo(String to) {
+<span class="fc" id="L53">		this.to = to;</span>
+<span class="fc" id="L54">	}</span>
+	public String getDate() {
+<span class="fc" id="L56">		return date;</span>
+	}
+	public void setDate(String date) {
+<span class="fc" id="L59">		this.date = date;</span>
+<span class="fc" id="L60">	}</span>
+	public int getAdultcount() {
+<span class="fc" id="L62">		return adultcount;</span>
+	}
+	public void setAdultcount(int adultcount) {
+<span class="fc" id="L65">		this.adultcount = adultcount;</span>
+<span class="fc" id="L66">	}</span>
+	public int getChildrencount() {
+<span class="fc" id="L68">		return childrencount;</span>
+	}
+	public void setChildrencount(int childrencount) {
+<span class="fc" id="L71">		this.childrencount = childrencount;</span>
+<span class="fc" id="L72">	}</span>
+	@Override
+	public String toString() {
+<span class="fc" id="L75">		return &quot;BookFlights [id=&quot; + id + &quot;, trip=&quot; + trip + &quot;, from=&quot; + from + &quot;, to=&quot; + to + &quot;, date=&quot; + date</span>
+<span class="fc" id="L76">				+ &quot;, adultcount=&quot; + adultcount + &quot;, childrencount=&quot; + childrencount + &quot;]&quot;;</span>
+	}
+	public BookFlights(int id, String trip, String from, String to, String date, int adultcount, int childrencount) {
+<span class="fc" id="L79">		super();</span>
+<span class="fc" id="L80">		this.id = id;</span>
+<span class="fc" id="L81">		this.trip = trip;</span>
+<span class="fc" id="L82">		this.from = from;</span>
+<span class="fc" id="L83">		this.to = to;</span>
+<span class="fc" id="L84">		this.date = date;</span>
+<span class="fc" id="L85">		this.adultcount = adultcount;</span>
+<span class="fc" id="L86">		this.childrencount = childrencount;</span>
+<span class="fc" id="L87">	}</span>
+	
+<span class="fc" id="L89">	public BookFlights() {}</span>
+	
+
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>ControllerTest.PaymentTest (Nov 1, 2022 8:19:03 PM)</div></body></html>

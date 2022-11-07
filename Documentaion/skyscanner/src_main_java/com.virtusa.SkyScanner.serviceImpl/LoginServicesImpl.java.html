@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LoginServicesImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">BookedTicketsTest (03-Nov-2022 1:43:21 pm)</a> &gt; <a href="../../index.html" class="el_group">skyscanner</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.serviceImpl</a> &gt; <span class="el_source">LoginServicesImpl.java</span></div><h1>LoginServicesImpl.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.serviceImpl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.virtusa.SkyScanner.model.Users;
+import com.virtusa.SkyScanner.service.LoginServices;
+
+/** 
+ * This service implements loginServices interface and handles all the processing for login related requests for both admin and user
+  */
+@Service
+<span class="fc" id="L14">public class LoginServicesImpl implements LoginServices {</span>
+	
+	@Autowired
+	UserServiceImpl userSer;
+<span class="fc" id="L18">	Logger logger = LoggerFactory.getLogger(LoginServicesImpl.class);</span>
+
+	String username;
+	String pass;
+	int id;
+	Users activeuser;
+	
+	/** 
+	 * This is validate login details based on mail and password and returns the validation status with setting the active user
+	  */
+	public String validateUser(String mail,String pass) {
+
+<span class="fc" id="L30">		Users user=userSer.validateUserName(mail);</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">		if(user==null)</span>
+<span class="fc" id="L32">			return &quot;Invalid Creditials&quot;;</span>
+		else
+		{
+<span class="nc bnc" id="L35" title="All 4 branches missed.">			if(user.getEmail().equals(mail)&amp;&amp;user.getPassword().equals(pass))</span>
+			{
+<span class="nc" id="L37">				activeuser=user;</span>
+<span class="nc" id="L38">				return &quot;Login successfull&quot;;				</span>
+			}
+			else
+<span class="nc" id="L41">				return &quot;Invalid Creditials&quot;;</span>
+		}
+	}
+	
+	/** 
+	 * This is get active user object
+	  */
+	public Users getActiveuser() {
+<span class="fc" id="L49">		return activeuser;</span>
+	}
+	/** 
+	 * This is set active user object
+	  */
+	public void setActiveuser(Users currentActiveUser) {
+<span class="fc" id="L55">		this.activeuser=currentActiveUser;</span>
+<span class="fc" id="L56">	}</span>
+	/** 
+	 * This is get active user id,if active user null the returns 0
+	  */
+	public int activeUserId() {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if(activeuser==null)</span>
+<span class="fc" id="L62">			return 0;</span>
+		else
+<span class="fc" id="L64">			return activeuser.getId();</span>
+	}
+
+	/** 
+	 * This is validate admin login details
+	  */
+	public String validateAdmin(String email, String password) {
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">		if(email.equals(&quot;admin@admin.com&quot;)&amp;&amp;password.equals(&quot;root&quot;))</span>
+<span class="fc" id="L72">			return &quot;Login successfull&quot;;</span>
+		else
+<span class="fc" id="L74">			return &quot;Invalid Creditials&quot;;</span>
+		
+	}
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>BookedTicketsTest (03-Nov-2022 1:43:21 pm)</div></body></html>

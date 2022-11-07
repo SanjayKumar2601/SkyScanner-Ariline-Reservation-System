@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AdminControllerImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">BookedTicketsTest (03-Nov-2022 1:43:21 pm)</a> &gt; <a href="../../index.html" class="el_group">skyscanner</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.controllerImpl</a> &gt; <span class="el_source">AdminControllerImpl.java</span></div><h1>AdminControllerImpl.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.controllerImpl;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+//import com.virtusa.SkyScanner.controller.AdminController;
+import com.virtusa.SkyScanner.model.Flights;
+import com.virtusa.SkyScanner.model.Users;
+import com.virtusa.SkyScanner.serviceImpl.CheckinServiceImpl;
+import com.virtusa.SkyScanner.serviceImpl.FlightBookingServiceImpl;
+import com.virtusa.SkyScanner.serviceImpl.FlightServicesImpl;
+import com.virtusa.SkyScanner.serviceImpl.LoginServicesImpl;
+import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
+
+/** This interface is for admin controller implementation.
+ * Handles all the admin releated mappings
+ * All implemented  */
+@RestController
+
+<span class="fc" id="L29">public class AdminControllerImpl{</span>
+	
+	@Autowired
+	UserServiceImpl userService;
+	
+	@Autowired
+	FlightServicesImpl flightService;
+	
+	@Autowired
+	FlightBookingServiceImpl fligthbookService;
+	
+	@Autowired
+	LoginServicesImpl loginService;
+	
+	@Autowired
+	CheckinServiceImpl checkinService;
+	
+<span class="fc" id="L46">	Logger logger = LoggerFactory.getLogger(AdminControllerImpl.class);</span>
+	
+	/** Receives all login details and validates them.The validation status is returned to the web page the user is promted
+	  */
+	@PostMapping(&quot;/adminlogin&quot;)
+	public ModelAndView getAdminLoginDetails(@RequestParam(&quot;email&quot;)String email,@RequestParam(&quot;password&quot;)String password) {
+<span class="fc" id="L52">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L53">		mv.setViewName(&quot;admin_login.jsp&quot;);</span>
+<span class="fc" id="L54">		String s=loginService.validateAdmin(email,password);</span>
+<span class="fc" id="L55">		mv.addObject(&quot;validationStatus&quot;, s);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if(s.equals(&quot;Login successfull&quot;)) </span>
+		{
+<span class="fc" id="L58">		logger.info(&quot;Admin Validation Status : &quot;+s);</span>
+<span class="fc" id="L59">		return new ModelAndView(&quot;redirect:/adminhome.jsp&quot;);</span>
+		}
+		else
+<span class="fc" id="L62">			return mv;</span>
+		
+	}
+	
+	/** Adds new flights and is only accessible to admin
+	 */
+	@PostMapping(&quot;/addFlights&quot;)
+	public ModelAndView setFlightDetails(@ModelAttribute Flights flight) {
+<span class="fc" id="L70">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L71">		mv.setViewName(&quot;addFlights.jsp&quot;);</span>
+<span class="fc" id="L72">		flightService.addFlight(flight);</span>
+<span class="fc" id="L73">		logger.info(&quot;Fligth Added&quot;);</span>
+<span class="fc" id="L74">		return mv;</span>
+	}
+	
+	/** Admin Home page to navigate through the requirements
+	 */
+	@PostMapping(&quot;/adminHome&quot;)
+	public ModelAndView adminHome() {
+<span class="fc" id="L81">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L82">		mv.setViewName(&quot;adminhome.jsp&quot;);</span>
+<span class="fc" id="L83">		return mv;</span>
+	}
+	
+	/**Display the page for removing flights
+	 */
+	@GetMapping(&quot;/displayremoveFlights&quot;)
+	public ModelAndView adminRemoveFligths() {
+<span class="fc" id="L90">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L91">		mv.setViewName(&quot;removeFlight.jsp&quot;);</span>
+<span class="fc" id="L92">		List&lt;Flights&gt; allflights=flightService.getAllFlights(); </span>
+<span class="fc" id="L93">		mv.addObject(&quot;flights&quot;,allflights);</span>
+<span class="fc" id="L94">		return mv;</span>
+	}
+	
+	/** Removes flights and is only accessible to admin
+	 */
+	@PostMapping(&quot;/removeFlight&quot;)
+	public ModelAndView adminRemoveFlight(@RequestParam(name=&quot;f&quot;) String f) {//
+<span class="fc" id="L101">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L102">		mv.setViewName(&quot;removeFlight.jsp&quot;);</span>
+<span class="fc" id="L103">		int n=Integer.parseInt(f);</span>
+<span class="fc" id="L104">		flightService.removeFlightByFlightNumber(n);</span>
+<span class="fc" id="L105">		logger.info(&quot;flight removed&quot;);</span>
+<span class="fc" id="L106">		return mv;</span>
+	}
+	
+	/** View all registered users and is only accessible to admin
+	 */
+	@PostMapping(&quot;/viewusers&quot;)
+	public ModelAndView adminViewUsers() {
+<span class="fc" id="L113">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L114">		mv.setViewName(&quot;adminviewflights.jsp&quot;);</span>
+<span class="fc" id="L115">		List&lt;Users&gt; allusers=userService.getAllUsers();</span>
+<span class="fc" id="L116">		mv.addObject(&quot;allusers&quot;,allusers);</span>
+<span class="fc" id="L117">		return mv;</span>
+	}
+	
+	/** View all flights and is only accessible to admin
+	 */
+	@PostMapping(&quot;/adminviewflights&quot;)
+	public ModelAndView adminViewFligths() {
+<span class="fc" id="L124">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L125">		mv.setViewName(&quot;adminviewflights.jsp&quot;);</span>
+<span class="fc" id="L126">		List&lt;Flights&gt; allflights=flightService.getAllFlights(); </span>
+<span class="fc" id="L127">		mv.addObject(&quot;flights&quot;,allflights);</span>
+<span class="fc" id="L128">		return mv;</span>
+	}
+	
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>BookedTicketsTest (03-Nov-2022 1:43:21 pm)</div></body></html>

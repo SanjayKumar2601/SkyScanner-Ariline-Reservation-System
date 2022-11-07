@@ -20,7 +20,7 @@
   <div id="navigation"></div>
     
       <div class="shadow bg-white rounded">
-        <form action="/payment" method="post">
+        
         <div class="trip">
             <h3><strong> Select Payment method</strong></h3><br>
             <div class="form-check">
@@ -41,7 +41,7 @@
                   Wallet
                 </label>
               </div><br>
-           
+           <form action="/payment" method="post">
                 <label class="form-check-label" for="amount">Amount to be paid </label>
               <input type="number" name="amount" id="amount" value="${totalcost}" disabled>
             </div><br>

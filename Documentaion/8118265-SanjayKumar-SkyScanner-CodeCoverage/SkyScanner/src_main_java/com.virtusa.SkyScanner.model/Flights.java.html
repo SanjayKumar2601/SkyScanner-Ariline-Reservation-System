@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Flights.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ControllerTest.PaymentTest (Nov 1, 2022 8:19:03 PM)</a> &gt; <a href="../../index.html" class="el_group">SkyScanner</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.model</a> &gt; <span class="el_source">Flights.java</span></div><h1>Flights.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.model;
+
+
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+/** This is a model class.  
+ * Here id is set as the primary key and is a auto generated value
+ * Stores details of the Flights
+ * */
+@Entity
+public class Flights{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	int id;
+	
+	private int flightnumber;
+	private String departure;
+	private String destination;
+	private String starttime;
+	private String endtime;
+	private double price;
+<span class="fc" id="L27">	private int seatcount=100;</span>
+	
+	
+
+<span class="fc" id="L31">	public Flights(){}</span>
+	
+	
+
+
+	@Override
+	public String toString() {
+<span class="fc" id="L38">		return &quot;Flights [id=&quot; + id + &quot;, flightnumber=&quot; + flightnumber + &quot;, departure=&quot; + departure + &quot;, destination=&quot;</span>
+<span class="fc" id="L39">				+ destination + &quot;, starttime=&quot; + starttime + &quot;, endtime=&quot; + endtime + &quot;, price=&quot; + price</span>
+<span class="fc" id="L40">				+ &quot;, seatcount=&quot; + seatcount + &quot;]&quot;;</span>
+	}
+
+
+
+	public Flights(int id, int flightnumber, String departure, String destination, String starttime, String endtime,
+			double price, int seatcount) {
+<span class="fc" id="L47">		super();</span>
+<span class="fc" id="L48">		this.id = id;</span>
+<span class="fc" id="L49">		this.flightnumber = flightnumber;</span>
+<span class="fc" id="L50">		this.departure = departure;</span>
+<span class="fc" id="L51">		this.destination = destination;</span>
+<span class="fc" id="L52">		this.starttime = starttime;</span>
+<span class="fc" id="L53">		this.endtime = endtime;</span>
+<span class="fc" id="L54">		this.price = price;</span>
+<span class="fc" id="L55">		this.seatcount = seatcount;</span>
+<span class="fc" id="L56">	}</span>
+
+	
+
+
+
+
+	public int getflightnumber() {
+<span class="fc" id="L64">		return flightnumber;</span>
+	}
+
+	public void setflightnumber(int flightnumber) {
+<span class="fc" id="L68">		this.flightnumber = flightnumber;</span>
+<span class="fc" id="L69">	}</span>
+
+	public String getDeparture() {
+<span class="fc" id="L72">		return departure;</span>
+	}
+
+	public void setDeparture(String departure) {
+<span class="fc" id="L76">		this.departure = departure;</span>
+<span class="fc" id="L77">	}</span>
+
+	public String getDestination() {
+<span class="fc" id="L80">		return destination;</span>
+	}
+
+	public void setDestination(String destination) {
+<span class="fc" id="L84">		this.destination = destination;</span>
+<span class="fc" id="L85">	}</span>
+
+	public String getstarttime() {
+<span class="fc" id="L88">		return starttime;</span>
+	}
+
+	public void setstarttime(String starttime) {
+<span class="fc" id="L92">		this.starttime = starttime;</span>
+<span class="fc" id="L93">	}</span>
+
+	public String getendtime() {
+<span class="fc" id="L96">		return endtime;</span>
+	}
+
+	public void setendtime(String endtime) {
+<span class="fc" id="L100">		this.endtime = endtime;</span>
+<span class="fc" id="L101">	}</span>
+
+	public double getPrice() {
+<span class="fc" id="L104">		return price;</span>
+	}
+
+	public void setPrice(double price) {
+<span class="fc" id="L108">		this.price = price;</span>
+<span class="fc" id="L109">	}</span>
+	
+	public int getSeatcount() {
+<span class="fc" id="L112">		return seatcount;</span>
+	}
+
+	public void setSeatcount(int seatcount) {
+<span class="fc" id="L116">		this.seatcount = seatcount;</span>
+<span class="fc" id="L117">	}</span>
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>ControllerTest.PaymentTest (Nov 1, 2022 8:19:03 PM)</div></body></html>

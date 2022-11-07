@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FlightServicesImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">BookedTicketsTest (03-Nov-2022 1:43:21 pm)</a> &gt; <a href="../../index.html" class="el_group">skyscanner</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.serviceImpl</a> &gt; <span class="el_source">FlightServicesImpl.java</span></div><h1>FlightServicesImpl.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.serviceImpl;
+import java.util.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+
+
+import com.virtusa.SkyScanner.model.Flights;
+import com.virtusa.SkyScanner.repository.FligthsRepository;
+import com.virtusa.SkyScanner.service.FlightServices;
+
+
+
+/** 
+ * This service implements FlightService interface and handles all the processing for flight related requests
+  */
+@Primary
+@Service
+<span class="fc" id="L20">public class FlightServicesImpl implements FlightServices{</span>
+	
+	@Autowired
+	FligthsRepository flightsRepo;
+	
+	/** 
+	 * This is to add flight
+	  */
+	public void addFlight(Flights flight) {
+<span class="fc" id="L29">		flightsRepo.save(flight);</span>
+<span class="fc" id="L30">	}</span>
+	
+	/** 
+	 * This is to remove flight based on flight id
+	  */
+	public void removeFlightByFlightNumber(int flightid) {
+<span class="fc" id="L36">		flightsRepo.deleteByFlightnumber(flightid);</span>
+		
+<span class="fc" id="L38">	}</span>
+
+	/** 
+	 * This is get details of all flights
+	  */
+	public List&lt;Flights&gt; getAllFlights() {
+<span class="fc" id="L44">		return flightsRepo.findAll();</span>
+	}
+	
+
+
+	
+	
+
+	
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>BookedTicketsTest (03-Nov-2022 1:43:21 pm)</div></body></html>

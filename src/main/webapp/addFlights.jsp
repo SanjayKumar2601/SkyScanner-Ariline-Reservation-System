@@ -35,7 +35,7 @@
         <button type="submit" value="Add Flight" class="btn btn-success">Add Flight</button>
     </form>
 </div>
-</form>
+
 <div id="footer"></div>
 </body>
 <script>

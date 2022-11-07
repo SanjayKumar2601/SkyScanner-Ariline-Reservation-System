@@ -1,0 +1,1101 @@
+openapi: 3.0.3
+info:
+  title: SkyScanner - Api Documentation
+  description: Api Documentation for SkyScanner - Airline Reservation System
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Default
+tags:
+  - name: admin-controller-impl
+    description: Admin Controller Impl
+  - name: basic-error-controller
+    description: Basic Error Controller
+  - name: controller-swagger
+    description: Controller Swagger
+  - name: ticket-managment-controller-impl
+    description: Ticket Managment Controller Impl
+  - name: user-controller-impl
+    description: User Controller Impl
+paths:
+  /addFlights:
+    post:
+      tags:
+        - admin-controller-impl
+      summary: Add new flight
+      operationId: setFlightDetailsUsingPOST
+      parameters:
+        - name: departure
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: destination
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: endtime
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: flightnumber
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: price
+          in: query
+          required: false
+          style: form
+          schema:
+            type: number
+            format: double
+        - name: seatcount
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: starttime
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /adminHome:
+    post:
+      tags:
+        - admin-controller-impl
+      summary: Admin Home Page
+      operationId: adminHomeUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /adminlogin:
+    post:
+      tags:
+        - admin-controller-impl
+      summary: Get admin details for login 
+      operationId: getAdminLoginDetailsUsingPOST
+      parameters:
+        - name: email
+          in: query
+          description: email
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: password
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /adminviewflights:
+    post:
+      tags:
+        - admin-controller-impl
+      summary: View all flights
+      operationId: adminViewFligthsUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /displayremoveFlights:
+    post:
+      tags:
+        - admin-controller-impl
+      summary: Display all flights for reference
+      operationId: adminRemoveFligthsUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /removeFlight:
+    post:
+      tags:
+        - admin-controller-impl
+      summary: Remove flights
+      operationId: adminRemoveFlightUsingPOST
+      parameters:
+        - name: f
+          in: query
+          description: f
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /viewusers:
+    post:
+      tags:
+        - admin-controller-impl
+      summary: View all registered users
+      operationId: adminViewUsersUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /error:
+    get:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPUT
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingDELETE
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    options:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingOPTIONS
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    head:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingHEAD
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPATCH
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    trace:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingTRACE
+      responses:
+        '200':
+          description: OK
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /swag:
+    get:
+      tags:
+        - controller-swagger
+      summary: swag
+      operationId: swagUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /BookFlights:
+    post:
+      tags:
+        - ticket-managment-controller-impl
+      summary:  Get flight details, passenger count to book ticket from user 
+      operationId: bookFlightTicketsUsingPOST
+      parameters:
+        - name: adultcount
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: childrencount
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: flightnumber
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: paymentstatus
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: price
+          in: query
+          required: false
+          style: form
+          schema:
+            type: number
+            format: double
+        - name: seats
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: tid
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: u.email
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: u.id
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: u.name
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: u.password
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: 'u.tickets[0].adultcount'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: 'u.tickets[0].childrencount'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: 'u.tickets[0].flightnumber'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: 'u.tickets[0].paymentstatus'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: 'u.tickets[0].price'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: number
+            format: double
+        - name: 'u.tickets[0].seats'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: 'u.tickets[0].tid'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /SearchFlights:
+    post:
+      tags:
+        - ticket-managment-controller-impl
+      summary: Search flights according to input from user
+      operationId: searchBookFlightUsingPOST
+      parameters:
+        - name: adultcount
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: childrencount
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: date
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: id
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: to
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: trip
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /displaypayment:
+    post:
+      tags:
+        - ticket-managment-controller-impl
+      summary: Display payment details
+      operationId: displayPaymentUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /payment:
+    post:
+      tags:
+        - ticket-managment-controller-impl
+      summary: Process payment and confirm tickets
+      operationId: PaymentUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /Home:
+    get:
+      tags:
+        - user-controller-impl
+      summary: Home page
+      operationId: getHomeUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /cancelTicket:
+    post:
+      tags:
+        - user-controller-impl
+      summary: Cancel booked tickets
+      operationId: cancelTicketUsingPOST
+      parameters:
+        - name: ticketid
+          in: query
+          description: ticketid
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /checkin:
+    post:
+      tags:
+        - user-controller-impl
+      summary: Check in for booked tickets
+      operationId: getCheckinDetailsUsingPOST
+      parameters:
+        - name: tid
+          in: query
+          description: tid
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /displaycancelTicket:
+    post:
+      tags:
+        - user-controller-impl
+      summary: Display booked tickets for user reference
+      operationId: cancelTicketsUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /displaycheckin:
+    post:
+      tags:
+        - user-controller-impl
+      summary: Display booked tickets for user reference
+      operationId: displayCheckinUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /logout:
+    post:
+      tags:
+        - user-controller-impl
+      summary: Logout (user/admin)
+      operationId: LogoutUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /manage:
+    post:
+      tags:
+        - user-controller-impl
+      summary: View booked tickets
+      operationId: manageUsingPOST
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /seatmapping:
+    post:
+      tags:
+        - user-controller-impl
+      summary: Seat mapping for the user to check in according to seat layout
+      operationId: setSeatMappingUsingPOST
+      parameters:
+        - name: seats
+          in: query
+          description: seats
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /userlogin:
+    post:
+      tags:
+        - user-controller-impl
+      summary: Get user details for login 
+      operationId: getLoginUsingPOST
+      parameters:
+        - name: email
+          in: query
+          description: email
+          required: true
+          style: form
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: password
+          required: true
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /usersignup:
+    post:
+      tags:
+        - user-controller-impl
+      summary: Get user details for sign up
+      operationId: getSignupDetailsUsingPOST
+      parameters:
+        - name: email
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: id
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: name
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: 'tickets[0].adultcount'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: 'tickets[0].childrencount'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: 'tickets[0].flightnumber'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: 'tickets[0].paymentstatus'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: 'tickets[0].price'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: number
+            format: double
+        - name: 'tickets[0].seats'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: 'tickets[0].tid'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: 'tickets[0].u.email'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: 'tickets[0].u.id'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: 'tickets[0].u.name'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+        - name: 'tickets[0].u.password'
+          in: query
+          required: false
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    ModelAndView:
+      title: ModelAndView
+      type: object
+      properties:
+        empty:
+          type: boolean
+        model:
+          type: object
+        modelMap:
+          type: object
+          additionalProperties:
+            type: object
+        reference:
+          type: boolean
+        status:
+          type: string
+          enum:
+            - ACCEPTED
+            - ALREADY_REPORTED
+            - BAD_GATEWAY
+            - BAD_REQUEST
+            - BANDWIDTH_LIMIT_EXCEEDED
+            - CHECKPOINT
+            - CONFLICT
+            - CONTINUE
+            - CREATED
+            - DESTINATION_LOCKED
+            - EXPECTATION_FAILED
+            - FAILED_DEPENDENCY
+            - FORBIDDEN
+            - FOUND
+            - GATEWAY_TIMEOUT
+            - GONE
+            - HTTP_VERSION_NOT_SUPPORTED
+            - IM_USED
+            - INSUFFICIENT_SPACE_ON_RESOURCE
+            - INSUFFICIENT_STORAGE
+            - INTERNAL_SERVER_ERROR
+            - I_AM_A_TEAPOT
+            - LENGTH_REQUIRED
+            - LOCKED
+            - LOOP_DETECTED
+            - METHOD_FAILURE
+            - METHOD_NOT_ALLOWED
+            - MOVED_PERMANENTLY
+            - MOVED_TEMPORARILY
+            - MULTIPLE_CHOICES
+            - MULTI_STATUS
+            - NETWORK_AUTHENTICATION_REQUIRED
+            - NON_AUTHORITATIVE_INFORMATION
+            - NOT_ACCEPTABLE
+            - NOT_EXTENDED
+            - NOT_FOUND
+            - NOT_IMPLEMENTED
+            - NOT_MODIFIED
+            - NO_CONTENT
+            - OK
+            - PARTIAL_CONTENT
+            - PAYLOAD_TOO_LARGE
+            - PAYMENT_REQUIRED
+            - PERMANENT_REDIRECT
+            - PRECONDITION_FAILED
+            - PRECONDITION_REQUIRED
+            - PROCESSING
+            - PROXY_AUTHENTICATION_REQUIRED
+            - REQUESTED_RANGE_NOT_SATISFIABLE
+            - REQUEST_ENTITY_TOO_LARGE
+            - REQUEST_HEADER_FIELDS_TOO_LARGE
+            - REQUEST_TIMEOUT
+            - REQUEST_URI_TOO_LONG
+            - RESET_CONTENT
+            - SEE_OTHER
+            - SERVICE_UNAVAILABLE
+            - SWITCHING_PROTOCOLS
+            - TEMPORARY_REDIRECT
+            - TOO_EARLY
+            - TOO_MANY_REQUESTS
+            - UNAUTHORIZED
+            - UNAVAILABLE_FOR_LEGAL_REASONS
+            - UNPROCESSABLE_ENTITY
+            - UNSUPPORTED_MEDIA_TYPE
+            - UPGRADE_REQUIRED
+            - URI_TOO_LONG
+            - USE_PROXY
+            - VARIANT_ALSO_NEGOTIATES
+        view:
+          $ref: '#/components/schemas/View'
+        viewName:
+          type: string
+    View:
+      title: View
+      type: object
+      properties:
+        contentType:
+          type: string

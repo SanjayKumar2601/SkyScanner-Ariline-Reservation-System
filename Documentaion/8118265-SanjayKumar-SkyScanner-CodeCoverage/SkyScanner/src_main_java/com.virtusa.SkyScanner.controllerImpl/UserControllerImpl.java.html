@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UserControllerImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ControllerTest.PaymentTest (Nov 1, 2022 8:19:03 PM)</a> &gt; <a href="../../index.html" class="el_group">SkyScanner</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.controllerImpl</a> &gt; <span class="el_source">UserControllerImpl.java</span></div><h1>UserControllerImpl.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.controllerImpl;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+//import com.virtusa.SkyScanner.controller.UserController;
+import com.virtusa.SkyScanner.model.BookedTickets;
+import com.virtusa.SkyScanner.model.Users;
+import com.virtusa.SkyScanner.serviceImpl.CheckinServiceImpl;
+import com.virtusa.SkyScanner.serviceImpl.FlightBookingServiceImpl;
+import com.virtusa.SkyScanner.serviceImpl.FlightServicesImpl;
+import com.virtusa.SkyScanner.serviceImpl.LoginServicesImpl;
+import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
+
+/** Handles all the user releated mappings
+ */
+@RestController
+<span class="fc" id="L27">public class UserControllerImpl{</span>
+	
+	@Autowired
+	UserServiceImpl userService;
+	
+	@Autowired
+	FlightServicesImpl flightService;
+	
+	@Autowired
+	FlightBookingServiceImpl fligthbookService;
+	
+	@Autowired
+	LoginServicesImpl loginService;
+	
+	@Autowired
+	CheckinServiceImpl checkinService;
+	
+<span class="fc" id="L44">	Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);</span>
+	
+	/** Receives all the login details from the user and validates them by also prompting the user
+	 */
+	@PostMapping(&quot;/userlogin&quot;)
+	public ModelAndView getLogin(@RequestParam(&quot;email&quot;)String email,@RequestParam(&quot;password&quot;)String password) {
+<span class="fc" id="L50">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L51">		mv.setViewName(&quot;Signup.jsp&quot;);</span>
+<span class="fc" id="L52">		String validationStatus=loginService.validateUser(email,password);</span>
+<span class="fc" id="L53">		mv.addObject(&quot;validationStatus&quot;,validationStatus);</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if(validationStatus.equals(&quot;Login successfull&quot;)) </span>
+		{
+<span class="nc" id="L56">		logger.info(&quot;Validation Status : &quot;+validationStatus);</span>
+<span class="nc" id="L57">		return new ModelAndView(&quot;redirect:/Home.jsp&quot;);</span>
+		}
+		else
+<span class="fc" id="L60">			return mv;</span>
+		
+	}
+	
+	/** Displays home page of the application
+	 */
+	@GetMapping(&quot;/Home&quot;)
+	public ModelAndView getHome() {
+<span class="fc" id="L68">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L69">		mv.setViewName(&quot;Home.jsp&quot;);</span>
+<span class="fc" id="L70">		return mv;</span>
+	}
+	
+	/** Receives all the user details from the user and registers as a new user
+	 */
+	@PostMapping(&quot;/usersignup&quot;)
+	public ModelAndView getSignupDetails(@ModelAttribute Users user) {
+<span class="fc" id="L77">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L78">		mv.setViewName(&quot;Signup.jsp&quot;);</span>
+<span class="fc" id="L79">		userService.addUsers(user);</span>
+<span class="fc" id="L80">		logger.info(&quot;Sign Up Successful&quot;);</span>
+<span class="fc" id="L81">		return mv;</span>
+	}
+	
+	/** Displays check in page
+	 */
+	@PostMapping(&quot;/displaycheckin&quot;)
+	public ModelAndView displayCheckin() {
+<span class="fc" id="L88">		ModelAndView mv=new ModelAndView(&quot;checkin.jsp&quot;);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if(loginService.activeUserId()==0)</span>
+		{
+<span class="fc" id="L91">			mv.addObject(&quot;login&quot;,&quot;Please Login to check in with your tickets&quot;);</span>
+<span class="fc" id="L92">			return mv;</span>
+		}
+		else {
+<span class="fc" id="L95">		List&lt;BookedTickets&gt; tickets=fligthbookService.userTicketDisplay(loginService.activeUserId());</span>
+<span class="fc" id="L96">		mv.addObject(&quot;tickets&quot;,tickets);</span>
+<span class="fc" id="L97">		return mv;</span>
+		}
+	}
+	
+	
+	int tId;
+	/** Handles the process of check - in
+	 */
+	@PostMapping(&quot;/checkin&quot;)
+	public ModelAndView getCheckinDetails(@RequestParam(name=&quot;tid&quot;) String tid) {
+<span class="fc" id="L107">		ModelAndView mv=new ModelAndView(&quot;checkin.jsp&quot;);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if(loginService.activeUserId()==0)</span>
+		{
+<span class="fc" id="L110">			mv.addObject(&quot;login&quot;,&quot;Please Login to check in with your tickets&quot;);</span>
+<span class="fc" id="L111">			return mv;</span>
+		}
+		else {
+<span class="fc" id="L114">		List&lt;BookedTickets&gt; tickets=fligthbookService.userTicketDisplay(loginService.activeUserId());</span>
+<span class="fc" id="L115">		mv.addObject(&quot;tickets&quot;,tickets);</span>
+<span class="fc" id="L116">		tId=Integer.parseInt(tid);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if(checkinService.setSeats(tId))</span>
+<span class="fc" id="L118">			return new ModelAndView(&quot;redirect:/seatmap.jsp&quot;);</span>
+		else
+<span class="nc" id="L120">			return mv;</span>
+		}
+	}
+	
+	/** Displays cancel ticket page
+	 */
+	@PostMapping(&quot;/displaycancelTicket&quot;)
+	public ModelAndView cancelTickets() {
+<span class="fc" id="L128">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L129">		mv.setViewName(&quot;cancel.jsp&quot;);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		if(loginService.activeUserId()==0)</span>
+		{
+<span class="fc" id="L132">			mv.addObject(&quot;login&quot;,&quot;Please Login to cancel your tickets&quot;);</span>
+<span class="fc" id="L133">			logger.warn(&quot;Please Login to cancel your tickets&quot;);</span>
+<span class="fc" id="L134">			return mv;</span>
+		}
+		else {
+<span class="fc" id="L137">		List&lt;BookedTickets&gt; tickets=fligthbookService.userTicketDisplay(loginService.activeUserId());</span>
+<span class="fc" id="L138">		mv.addObject(&quot;tickets&quot;,tickets);</span>
+<span class="fc" id="L139">		return mv;</span>
+		}
+	}
+	
+	/** Cancel the booked tickets by ticket id
+	 */
+	@PostMapping(&quot;/cancelTicket&quot;)
+	public ModelAndView cancelTicket(@RequestParam(&quot;ticketid&quot;) String tid) {
+<span class="fc" id="L147">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L148">		mv.setViewName(&quot;cancel.jsp&quot;);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if(loginService.activeUserId()==0)</span>
+		{
+<span class="fc" id="L151">			mv.addObject(&quot;login&quot;,&quot;Please Login to cancel your tickets&quot;);</span>
+<span class="fc" id="L152">			logger.warn(&quot;Please Login to cancel your tickets&quot;);</span>
+<span class="fc" id="L153">			return mv;</span>
+		}
+		else {
+<span class="fc" id="L156">		List&lt;BookedTickets&gt; tickets=fligthbookService.userTicketDisplay(loginService.activeUserId());</span>
+<span class="fc" id="L157">		mv.addObject(&quot;tickets&quot;,tickets);</span>
+<span class="fc" id="L158">		int ticketid=Integer.parseInt(tid);</span>
+<span class="fc" id="L159">		String status=fligthbookService.cancelTicket(ticketid);</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if(status.equals(&quot;Cancelled&quot;)) {</span>
+<span class="fc" id="L161">			mv.addObject(&quot;status&quot;,&quot;Ticket Canceled&quot;);</span>
+<span class="fc" id="L162">			logger.info(&quot;Ticket Canceled&quot;);</span>
+<span class="fc" id="L163">			return new ModelAndView(&quot;redirect:/manage&quot;);</span>
+		}
+		else {
+<span class="nc" id="L166">			mv.addObject(&quot;status&quot;,&quot;Error : Try again later&quot;);</span>
+<span class="nc" id="L167">			logger.warn(&quot;failed&quot;);</span>
+<span class="nc" id="L168">			return mv;</span>
+		}
+		}
+	}
+	
+	/** Displays all the booked tickets and its details
+	 */
+	@PostMapping(&quot;/manage&quot;)
+	public ModelAndView manage() {
+<span class="fc" id="L177">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L178">		mv.setViewName(&quot;manage.jsp&quot;);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if(loginService.activeUserId()==0)</span>
+		{
+<span class="fc" id="L181">			mv.addObject(&quot;login&quot;,&quot;Please Login to manage your tickets&quot;);</span>
+<span class="fc" id="L182">			logger.warn(&quot;Please Login to manage your tickets&quot;);</span>
+<span class="fc" id="L183">			return mv;</span>
+		}
+		else {
+<span class="fc" id="L186">		List&lt;BookedTickets&gt; tickets=fligthbookService.userTicketDisplay(loginService.activeUserId());</span>
+<span class="fc" id="L187">		mv.addObject(&quot;tickets&quot;,tickets);</span>
+<span class="fc" id="L188">		return mv;</span>
+		}
+	}
+	
+	
+	/**Provides the seat mapping of the flight and register the seats checked in for the respective ticket
+	 */
+	@PostMapping(&quot;/seatmapping&quot;)
+	public ModelAndView setSeatMapping(@RequestParam(name=&quot;seats&quot;) String seats) {
+<span class="fc" id="L197">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L198">		mv.setViewName(&quot;seatmap.jsp&quot;);</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if(checkinService.updateSeats(tId,seats))</span>
+		{
+<span class="fc" id="L201">			logger.info(&quot;Check-in Completed&quot;);</span>
+<span class="fc" id="L202">			return new ModelAndView(&quot;redirect:/manage&quot;);</span>
+		}
+		else {
+<span class="nc" id="L205">			logger.warn(&quot;Check-in Incomplete&quot;);</span>
+<span class="nc" id="L206">			return mv;</span>
+		}
+	}
+	
+	/** Logout for both user and admin this redirects back to the home page on successful logout
+	 */
+	@PostMapping(&quot;/logout&quot;)
+	public ModelAndView Logout() {
+<span class="fc" id="L214">		ModelAndView mv=new ModelAndView();</span>
+<span class="fc" id="L215">		mv.setViewName(&quot;Home.jsp&quot;);</span>
+<span class="fc" id="L216">		loginService.setActiveuser(null);</span>
+<span class="fc" id="L217">		mv.addObject(&quot;logout&quot;,&quot;Logged Out&quot;);</span>
+<span class="fc" id="L218">		logger.info(&quot;logged out&quot;);</span>
+<span class="fc" id="L219">		return mv;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>ControllerTest.PaymentTest (Nov 1, 2022 8:19:03 PM)</div></body></html>

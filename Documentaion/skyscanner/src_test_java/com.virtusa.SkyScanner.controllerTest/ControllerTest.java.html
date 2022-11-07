@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">BookedTicketsTest (03-Nov-2022 1:43:21 pm)</a> &gt; <a href="../../index.html" class="el_group">skyscanner</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.controllerTest</a> &gt; <span class="el_source">ControllerTest.java</span></div><h1>ControllerTest.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.controllerTest;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.virtusa.SkyScanner.model.BookFlights;
+import com.virtusa.SkyScanner.model.BookedTickets;
+import com.virtusa.SkyScanner.model.CheckIn;
+import com.virtusa.SkyScanner.model.Flights;
+import com.virtusa.SkyScanner.model.Users;
+import com.virtusa.SkyScanner.repository.BookTicketsRepository;
+import com.virtusa.SkyScanner.repository.CheckinRepository;
+import com.virtusa.SkyScanner.repository.FligthsRepository;
+import com.virtusa.SkyScanner.repository.UsersRepository;
+import com.virtusa.SkyScanner.serviceImpl.CheckinServiceImpl;
+import com.virtusa.SkyScanner.serviceImpl.FlightBookingServiceImpl;
+import com.virtusa.SkyScanner.serviceImpl.FlightServicesImpl;
+import com.virtusa.SkyScanner.serviceImpl.LoginServicesImpl;
+import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest()
+@AutoConfigureMockMvc(addFilters = false)
+<span class="fc" id="L36">public class ControllerTest {</span>
+	
+	@MockBean
+	UsersRepository userRepo;
+	
+	@MockBean
+	FligthsRepository flightRepo;
+	
+	@MockBean
+	BookTicketsRepository ticketRepo;
+	
+	@MockBean
+	CheckinRepository checkinRepo;
+	
+	
+	@Autowired
+	LoginServicesImpl loginService;
+	
+	@Autowired
+	UserServiceImpl userServiceImpl;
+	
+	@Autowired
+	FlightServicesImpl flightService;
+	
+	@Autowired
+	FlightBookingServiceImpl flightbService;
+	
+	@Autowired
+	CheckinServiceImpl checkService;
+	
+	@Autowired
+	public MockMvc mockmvc;
+	
+	@Autowired
+	public WebApplicationContext context;
+	
+<span class="fc" id="L72">	ObjectMapper om=new ObjectMapper();</span>
+	
+	
+<span class="fc" id="L75">	Users u=new Users(1,&quot;mail&quot;,&quot;sa&quot;,&quot;sa&quot;);</span>
+<span class="fc" id="L76">	Flights fl=new Flights(1,1,&quot;chennai&quot;,&quot;mumbai&quot;,&quot;09:00&quot;,&quot;10:00&quot;,100.00,100);</span>
+<span class="fc" id="L77">	BookFlights bf=new BookFlights(1,&quot;round&quot;,&quot;chennai&quot;,&quot;mumbai&quot;,&quot;12-10-12&quot;,1,1);</span>
+<span class="fc" id="L78">	BookedTickets bt=new BookedTickets(1,1,2,4,&quot;A3&quot;,u);</span>
+<span class="fc" id="L79">	BookedTickets tickets1=new BookedTickets(1,1,2,3,&quot;B6&quot;,u);</span>
+<span class="fc" id="L80">	CheckIn c=new CheckIn(1,&quot;Airport Check In&quot;);</span>
+	
+	
+	@Test
+	void getLoginTest() throws Exception{
+<span class="fc" id="L85">		Users u=new Users(1,&quot;sachin&quot;,&quot;sachin@gmail.com&quot;,&quot;sa&quot;);</span>
+<span class="fc" id="L86">		mockmvc.perform(post(&quot;/userlogin&quot;).param(&quot;email&quot;, &quot;sachin@gmail.com&quot;).param(&quot;password&quot;, &quot;sa&quot;)).andExpect(view().name(&quot;Signup.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L87">	}</span>
+	
+	@Test
+	void getHomeTest() throws Exception{
+<span class="fc" id="L91">		mockmvc.perform(get(&quot;/Home&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;Home.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L92">	}</span>
+	
+
+	@Test
+	void getSignupDetailsTest() throws Exception{
+<span class="fc" id="L97">		mockmvc.perform(post(&quot;/usersignup&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;Signup.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L98">	}</span>
+	
+	@Test
+	void displayCheckinTest() throws Exception{
+<span class="fc" id="L102">		mockmvc.perform(post(&quot;/displaycheckin&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;checkin.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L103">	}</span>
+	
+	@Test
+	void displayCheckinfailTest() throws Exception{
+<span class="fc" id="L107">		loginService.setActiveuser(null);</span>
+<span class="fc" id="L108">		mockmvc.perform(post(&quot;/displaycheckin&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;checkin.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L109">	}</span>
+	
+	@Test
+	void getCheckinDetailsTest() throws Exception{
+<span class="fc" id="L113">		loginService.setActiveuser(u);</span>
+<span class="fc" id="L114">		mockmvc.perform(post(&quot;/checkin&quot;).param(&quot;tid&quot;, &quot;1&quot;)).andExpect(view().name(&quot;redirect:/seatmap.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L115">	}</span>
+	
+	@Test
+	void getCheckinDetailsfailTest() throws Exception{
+<span class="fc" id="L119">		loginService.setActiveuser(null);</span>
+<span class="fc" id="L120">		mockmvc.perform(post(&quot;/checkin&quot;).param(&quot;tid&quot;, &quot;1&quot;)).andExpect(view().name(&quot;checkin.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L121">	}</span>
+	
+	@Test
+	void getAdminLoginDetailsTest() throws Exception{
+<span class="fc" id="L125">		mockmvc.perform(post(&quot;/adminlogin&quot;).param(&quot;email&quot;, &quot;admin@admin.com&quot;).param(&quot;password&quot;, &quot;root&quot;)).andExpect(view().name(&quot;redirect:/adminhome.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L126">	}</span>
+	
+	@Test
+	void getAdminLoginDetailsfailTest() throws Exception{
+<span class="fc" id="L130">		mockmvc.perform(post(&quot;/adminlogin&quot;).param(&quot;email&quot;, &quot;sachin@gmail.com&quot;).param(&quot;password&quot;, &quot;root&quot;)).andExpect(view().name(&quot;admin_login.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L131">	}</span>
+	
+	
+	@Test
+	void setFlightDetailsTest() throws Exception{
+<span class="fc" id="L136">		mockmvc.perform(post(&quot;/addFlights&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;addFlights.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L137">	}</span>
+	
+	@Test
+	void searchBookFlightTest() throws Exception{
+<span class="fc" id="L141">		loginService.setActiveuser(u);</span>
+<span class="fc" id="L142">		mockmvc.perform(post(&quot;/SearchFlights&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;search.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L143">	}</span>
+	
+	@Test
+	void searchBookFlightfailTest() throws Exception{
+<span class="fc" id="L147">		loginService.setActiveuser(null);</span>
+<span class="fc" id="L148">		mockmvc.perform(post(&quot;/SearchFlights&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;search.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L149">	}</span>
+	
+	@Test
+	void bookFlightTicketsfailTest() throws Exception{
+<span class="fc" id="L153">		loginService.setActiveuser(null);</span>
+<span class="fc" id="L154">		mockmvc.perform(post(&quot;/BookFlights&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;search.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L155">	}</span>
+	
+	@Test
+	void adminHometTest() throws Exception{
+<span class="fc" id="L159">		mockmvc.perform(post(&quot;/adminHome&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;adminhome.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L160">	}</span>
+	
+	@Test
+	void cancelTicketsTest() throws Exception{
+<span class="fc" id="L164">		loginService.setActiveuser(u);</span>
+<span class="fc" id="L165">		mockmvc.perform(post(&quot;/displaycancelTicket&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;cancel.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L166">	}</span>
+	
+	@Test
+	void cancelTicketsfailTest() throws Exception{
+<span class="fc" id="L170">		loginService.setActiveuser(null);</span>
+<span class="fc" id="L171">		mockmvc.perform(post(&quot;/displaycancelTicket&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;cancel.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L172">	}</span>
+	
+	@Test
+	void cancelTicketTests() throws Exception{
+<span class="fc" id="L176">		loginService.setActiveuser(u);</span>
+<span class="fc" id="L177">		mockmvc.perform(post(&quot;/cancelTicket&quot;).param(&quot;ticketid&quot;,&quot;1&quot;)).andExpect(view().name(&quot;redirect:/manage&quot;)).andReturn();</span>
+<span class="fc" id="L178">	}</span>
+	
+	@Test
+	void cancelTicketfailTests() throws Exception{
+<span class="fc" id="L182">		loginService.setActiveuser(null);</span>
+<span class="fc" id="L183">		mockmvc.perform(post(&quot;/cancelTicket&quot;).param(&quot;ticketid&quot;,&quot;1&quot;)).andExpect(view().name(&quot;cancel.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L184">	}</span>
+	
+	@Test
+	void adminRemoveFligthsTest() throws Exception{
+<span class="fc" id="L188">		mockmvc.perform(get(&quot;/displayremoveFlights&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;removeFlight.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L189">	}</span>
+	
+	@Test
+	void adminRemoveFlightTest() throws Exception{
+<span class="fc" id="L193">		mockmvc.perform(post(&quot;/removeFlight&quot;).param(&quot;f&quot;, &quot;1&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;removeFlight.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L194">	}</span>
+	
+	@Test
+	void adminViewUsersTest() throws Exception{
+<span class="fc" id="L198">		mockmvc.perform(post(&quot;/viewusers&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;adminviewflights.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L199">	}</span>
+	
+	@Test
+	void adminViewFligthsTest() throws Exception{
+<span class="fc" id="L203">		mockmvc.perform(post(&quot;/adminviewflights&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;adminviewflights.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L204">	}</span>
+	
+	@Test
+	void displayPaymentTest() throws Exception{
+<span class="fc" id="L208">		mockmvc.perform(get(&quot;/displaypayment&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;payment.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L209">	}</span>
+	
+	@Test
+	void manageTest() throws Exception{
+<span class="fc" id="L213">		loginService.setActiveuser(u);</span>
+<span class="fc" id="L214">		mockmvc.perform(get(&quot;/manage&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;manage.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L215">	}</span>
+	
+	@Test
+	void managefailTest() throws Exception{
+<span class="fc" id="L219">		loginService.setActiveuser(null);</span>
+<span class="fc" id="L220">		mockmvc.perform(get(&quot;/manage&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;manage.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L221">	}</span>
+	
+	@Test
+	void setSeatMappingTest() throws Exception{
+<span class="fc" id="L225">		loginService.setActiveuser(u);</span>
+<span class="fc" id="L226">		mockmvc.perform(post(&quot;/checkin&quot;).param(&quot;tid&quot;, &quot;1&quot;)).andExpect(view().name(&quot;redirect:/seatmap.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L227">		mockmvc.perform(post(&quot;/seatmapping&quot;).param(&quot;seats&quot;, &quot;A1&quot;)).andExpect(view().name(&quot;redirect:/manage&quot;)).andReturn();</span>
+<span class="fc" id="L228">	}</span>
+	
+	@Test
+	void LogoutTest() throws Exception{
+<span class="fc" id="L232">		mockmvc.perform(post(&quot;/logout&quot;)).andExpect(status().isOk()).andExpect(view().name(&quot;Home.jsp&quot;)).andReturn();</span>
+<span class="fc" id="L233">	}</span>
+	
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>BookedTicketsTest (03-Nov-2022 1:43:21 pm)</div></body></html>

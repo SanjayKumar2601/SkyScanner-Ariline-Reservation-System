@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CheckinServiceImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">ControllerTest.PaymentTest (Nov 1, 2022 8:19:03 PM)</a> &gt; <a href="../../index.html" class="el_group">SkyScanner</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.serviceImpl</a> &gt; <span class="el_source">CheckinServiceImpl.java</span></div><h1>CheckinServiceImpl.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.serviceImpl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.virtusa.SkyScanner.model.CheckIn;
+import com.virtusa.SkyScanner.repository.BookTicketsRepository;
+import com.virtusa.SkyScanner.repository.CheckinRepository;
+import com.virtusa.SkyScanner.service.CheckinService;
+/** 
+ * This service implements CheckinService interface and handles all the processing for check in related requests
+  */
+@Service
+<span class="fc" id="L15">public class CheckinServiceImpl implements CheckinService{</span>
+	
+	@Autowired
+	CheckinRepository checkinRepo;
+	
+	@Autowired
+	BookTicketsRepository bookedTickRepo;
+	
+<span class="fc" id="L23">	Logger logger = LoggerFactory.getLogger(CheckinServiceImpl.class);</span>
+	
+<span class="fc" id="L25">	CheckIn checkin=new CheckIn();</span>
+	
+	/** 
+	 * This is set details of the seats while checking in
+	  */
+	public boolean setSeats(int tid) {
+<span class="fc" id="L31">		checkin.setTicketId(tid);</span>
+<span class="fc" id="L32">		checkin.setSeats(&quot;Airport Check In&quot;);</span>
+<span class="fc" id="L33">		checkinRepo.save(checkin);</span>
+<span class="fc" id="L34">		logger.info(&quot;Checkin Status :Airport Check In&quot;);</span>
+<span class="fc" id="L35">		return true;</span>
+		
+	}
+
+	/** 
+	 * This is update seat details while checking in
+	  */
+	public boolean updateSeats(int tid,String seats) {
+<span class="fc" id="L43">		checkinRepo.updateSeats(tid,seats);</span>
+<span class="fc" id="L44">		bookedTickRepo.updateSeats(tid,seats);</span>
+<span class="fc" id="L45">		return true;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>ControllerTest.PaymentTest (Nov 1, 2022 8:19:03 PM)</div></body></html>

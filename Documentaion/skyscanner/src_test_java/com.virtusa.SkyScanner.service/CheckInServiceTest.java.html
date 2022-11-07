@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CheckInServiceTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">BookedTicketsTest (03-Nov-2022 1:43:21 pm)</a> &gt; <a href="../../index.html" class="el_group">skyscanner</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.virtusa.SkyScanner.service</a> &gt; <span class="el_source">CheckInServiceTest.java</span></div><h1>CheckInServiceTest.java</h1><pre class="source lang-java linenums">package com.virtusa.SkyScanner.service;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.virtusa.SkyScanner.model.BookFlights;
+import com.virtusa.SkyScanner.model.BookedTickets;
+import com.virtusa.SkyScanner.model.CheckIn;
+import com.virtusa.SkyScanner.model.Flights;
+import com.virtusa.SkyScanner.model.Users;
+import com.virtusa.SkyScanner.repository.BookTicketsRepository;
+import com.virtusa.SkyScanner.repository.CheckinRepository;
+import com.virtusa.SkyScanner.repository.FligthsRepository;
+import com.virtusa.SkyScanner.repository.UsersRepository;
+import com.virtusa.SkyScanner.serviceImpl.CheckinServiceImpl;
+import com.virtusa.SkyScanner.serviceImpl.FlightBookingServiceImpl;
+import com.virtusa.SkyScanner.serviceImpl.FlightServicesImpl;
+import com.virtusa.SkyScanner.serviceImpl.LoginServicesImpl;
+import com.virtusa.SkyScanner.serviceImpl.UserServiceImpl;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+<span class="fc" id="L34">public class CheckInServiceTest {</span>
+	
+
+	@MockBean
+	UsersRepository userRepo;
+	
+	@MockBean
+	FligthsRepository flightRepo;
+	
+	@MockBean
+	BookTicketsRepository ticketRepo;
+	
+	@MockBean
+	CheckinRepository checkinRepo;
+	
+	
+	@Autowired
+	LoginServicesImpl loginService;
+	
+	@Autowired
+	UserServiceImpl userServiceImpl;
+	
+	@Autowired
+	FlightServicesImpl flightService;
+	
+	@Autowired
+	FlightBookingServiceImpl flightbService;
+	
+	@Autowired
+	CheckinServiceImpl checkService;
+	
+	@Autowired
+	private MockMvc mockmvc;
+	
+	@Autowired
+	public WebApplicationContext context;
+	
+<span class="fc" id="L71">	ObjectMapper om=new ObjectMapper();</span>
+	
+	
+<span class="fc" id="L74">	Users u=new Users(1,&quot;mail&quot;,&quot;sa&quot;,&quot;sa&quot;);</span>
+<span class="fc" id="L75">	Flights fl=new Flights(1,1,&quot;chennai&quot;,&quot;mumbai&quot;,&quot;09:00&quot;,&quot;10:00&quot;,100.00,100);</span>
+<span class="fc" id="L76">	BookFlights bf=new BookFlights(1,&quot;round&quot;,&quot;chennai&quot;,&quot;mumbai&quot;,&quot;12-10-12&quot;,1,1);</span>
+<span class="fc" id="L77">	BookedTickets bt=new BookedTickets(1,1,2,4,&quot;A3&quot;,u);</span>
+<span class="fc" id="L78">	BookedTickets tickets1=new BookedTickets(1,1,2,3,&quot;B6&quot;,u);</span>
+<span class="fc" id="L79">	CheckIn c=new CheckIn(1,&quot;Airport Check In&quot;);</span>
+	
+
+	@Test
+	void setSeatsTest() {
+<span class="fc" id="L84">		assertEquals(true,checkService.setSeats(1));</span>
+<span class="fc" id="L85">	}</span>
+	
+	@Test
+	void updateSeatsTest() {
+<span class="fc" id="L89">		assertEquals(true,checkService.updateSeats(1, &quot;Q3&quot;));</span>
+<span class="fc" id="L90">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>BookedTicketsTest (03-Nov-2022 1:43:21 pm)</div></body></html>

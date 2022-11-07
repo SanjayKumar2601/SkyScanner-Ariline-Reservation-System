@@ -34,7 +34,7 @@
                 <th scope="col">Ticket Number</th>
               <th scope="col">Flight Number</th>
               <th scope="col">Adult Count</th>
-              <th scope="col">Passenger Count</th>
+              <th scope="col">Children Count</th>
              <th scope="col">Price</th>
             </tr>
           </thead>
@@ -67,13 +67,10 @@
 </body>
 <script>
   function alertf() {
-    if(("${status}")=="Ticket Canceled"){
+   
   alert("Ticket cancelled successfuly, Refresh the page for the update!");
-    }
-    else{
-    alert("Error : Cannot cancel Ticket");
-    }
-}
+    
+  }
   $(function(){
       $("#navigation").load("nav.jsp");
       $("#footer").load("footer.jsp");

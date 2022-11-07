@@ -185,7 +185,7 @@ public class ControllerTest {
 	
 	@Test
 	void adminRemoveFligthsTest() throws Exception{
-		mockmvc.perform(post("/displayremoveFlights")).andExpect(status().isOk()).andExpect(view().name("removeFlight.jsp")).andReturn();
+		mockmvc.perform(get("/displayremoveFlights")).andExpect(status().isOk()).andExpect(view().name("removeFlight.jsp")).andReturn();
 	}
 	
 	@Test
@@ -205,19 +205,19 @@ public class ControllerTest {
 	
 	@Test
 	void displayPaymentTest() throws Exception{
-		mockmvc.perform(post("/displaypayment")).andExpect(status().isOk()).andExpect(view().name("payment.jsp")).andReturn();
+		mockmvc.perform(get("/displaypayment")).andExpect(status().isOk()).andExpect(view().name("payment.jsp")).andReturn();
 	}
 	
 	@Test
 	void manageTest() throws Exception{
 		loginService.setActiveuser(u);
-		mockmvc.perform(post("/manage")).andExpect(status().isOk()).andExpect(view().name("manage.jsp")).andReturn();
+		mockmvc.perform(get("/manage")).andExpect(status().isOk()).andExpect(view().name("manage.jsp")).andReturn();
 	}
 	
 	@Test
 	void managefailTest() throws Exception{
 		loginService.setActiveuser(null);
-		mockmvc.perform(post("/manage")).andExpect(status().isOk()).andExpect(view().name("manage.jsp")).andReturn();
+		mockmvc.perform(get("/manage")).andExpect(status().isOk()).andExpect(view().name("manage.jsp")).andReturn();
 	}
 	
 	@Test

@@ -1,0 +1,7 @@
+com.virtusa.SkyScanner
+com.virtusa.SkyScanner.controller
+com.virtusa.SkyScanner.controllerImpl
+com.virtusa.SkyScanner.model
+com.virtusa.SkyScanner.repository
+com.virtusa.SkyScanner.service
+com.virtusa.SkyScanner.serviceImpl
