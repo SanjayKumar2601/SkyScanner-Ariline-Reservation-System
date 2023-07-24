@@ -16,8 +16,6 @@ Skyscanner is a project that aims to build a flight search and booking applicati
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (version X.X.X)
-- [MongoDB](https://www.mongodb.com/) (version X.X.X)
 
 ### Installation
 
